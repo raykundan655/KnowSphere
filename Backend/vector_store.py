@@ -36,7 +36,12 @@ def get_embedding_model():
     global _emb_model
     if _emb_model is None:
         from langchain_huggingface import HuggingFaceEmbeddings
-        _emb_model = HuggingFaceEmbeddings(model_name='sentence-transformers/all-MiniLM-L6-v2')
+        import os
+        cache_dir = os.path.join(os.path.dirname(__file__), "model_cache")
+        _emb_model = HuggingFaceEmbeddings(
+            model_name='sentence-transformers/all-MiniLM-L6-v2',
+            cache_folder=cache_dir
+        )
     return _emb_model
 
 
