@@ -1,7 +1,3 @@
-import tempfile
-from langchain_community.document_loaders import (PyPDFLoader,Docx2txtLoader,TextLoader)
-from langchain_text_splitters import RecursiveCharacterTextSplitter
-from langchain_huggingface import HuggingFaceEmbeddings
 from qdrant_client import QdrantClient
 from uuid import uuid4
 from dotenv import load_dotenv
@@ -39,6 +35,7 @@ def get_qdrant_client():
 def get_embedding_model():
     global _emb_model
     if _emb_model is None:
+        from langchain_huggingface import HuggingFaceEmbeddings
         _emb_model = HuggingFaceEmbeddings(model_name='sentence-transformers/all-MiniLM-L6-v2')
     return _emb_model
 
@@ -51,6 +48,9 @@ collection_name="knowledge_base_vectors"
 
 
 def process_store(file,file_type,user_id,kb_id,document_id,file_name):
+    import tempfile
+    from langchain_community.document_loaders import (PyPDFLoader,Docx2txtLoader,TextLoader)
+    from langchain_text_splitters import RecursiveCharacterTextSplitter
     qdrant = get_qdrant_client()
     emb_model = get_embedding_model()
 

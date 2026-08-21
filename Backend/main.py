@@ -24,3 +24,7 @@ app.include_router(auth_router)
 app.include_router(kb_router)
 app.include_router(document_router)
 app.include_router(chat_router)
+
+@app.get("/health")
+def health():
+    return {"status": "ok"}
