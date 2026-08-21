@@ -5,6 +5,7 @@ email-validator
 pymongo
 python-dotenv
 pwdlib[bcrypt]
+argon2-cffi
 PyJWT
 supabase
 langchain
