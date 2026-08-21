@@ -4,7 +4,7 @@ pydantic
 email-validator
 pymongo
 python-dotenv
-"pwdlib[bcrypt]"
+pwdlib[bcrypt]
 PyJWT
 supabase
 langchain
