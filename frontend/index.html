@@ -1,0 +1,640 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>KnowSphere — Your Documents. Your Knowledge. Your AI.</title>
+  <meta name="description" content="Build intelligent knowledge bases from your documents and get accurate, context-aware answers using Retrieval-Augmented Generation." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link rel="stylesheet" href="css/global.css" />
+  <style>
+    /* ── Landing-page-only styles ── */
+    :root {
+      --landing-max: 1200px;
+    }
+
+    /* NAV */
+    .landing-nav {
+      position: sticky;
+      top: 0;
+      z-index: 80;
+      background: rgba(var(--color-surface-raw, 255,255,255), 0.85);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--color-border);
+    }
+    [data-theme="dark"] .landing-nav {
+      background: rgba(17,24,39,0.85);
+    }
+    .landing-nav__inner {
+      max-width: var(--landing-max);
+      margin: 0 auto;
+      padding: 0 var(--space-6);
+      height: 64px;
+      display: flex;
+      align-items: center;
+      gap: var(--space-8);
+    }
+    .nav-logo {
+      display: flex;
+      align-items: center;
+      gap: var(--space-3);
+      text-decoration: none;
+    }
+    .nav-logo__mark {
+      width: 34px; height: 34px;
+      background: var(--color-accent);
+      border-radius: var(--radius-md);
+      display: flex; align-items: center; justify-content: center;
+      color: #fff;
+    }
+    .nav-logo__text {
+      font-size: var(--text-base);
+      font-weight: var(--weight-bold);
+      color: var(--color-text-primary);
+    }
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: var(--space-1);
+      flex: 1;
+    }
+    .nav-link {
+      font-size: var(--text-sm);
+      color: var(--color-text-secondary);
+      padding: var(--space-2) var(--space-3);
+      border-radius: var(--radius-md);
+      transition: color var(--transition-fast), background var(--transition-fast);
+    }
+    .nav-link:hover {
+      color: var(--color-text-primary);
+      background: var(--color-surface-alt);
+      text-decoration: none;
+    }
+    .nav-actions { display: flex; align-items: center; gap: var(--space-3); }
+
+    /* HERO */
+    .hero {
+      max-width: var(--landing-max);
+      margin: 0 auto;
+      padding: var(--space-16) var(--space-6) var(--space-12);
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: var(--space-12);
+      align-items: center;
+    }
+    .hero__badge {
+      display: inline-flex;
+      align-items: center;
+      gap: var(--space-2);
+      background: var(--color-accent-subtle);
+      color: var(--color-accent);
+      border: 1px solid var(--color-accent-border);
+      border-radius: var(--radius-full);
+      padding: var(--space-1) var(--space-3);
+      font-size: var(--text-xs);
+      font-weight: var(--weight-semibold);
+      letter-spacing: 0.04em;
+      margin-bottom: var(--space-5);
+    }
+    .hero__title {
+      font-size: 3rem;
+      font-weight: var(--weight-bold);
+      line-height: 1.15;
+      letter-spacing: -0.02em;
+      margin-bottom: var(--space-5);
+    }
+    .hero__title span { color: var(--color-accent); }
+    .hero__subtitle {
+      font-size: var(--text-lg);
+      color: var(--color-text-secondary);
+      line-height: var(--leading-relaxed);
+      margin-bottom: var(--space-8);
+      max-width: 500px;
+    }
+    .hero__actions { display: flex; gap: var(--space-4); flex-wrap: wrap; }
+
+    /* Dashboard Mockup */
+    .hero__visual {
+      position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .dashboard-mockup {
+      background: var(--color-surface);
+      border: 1px solid var(--color-border);
+      border-radius: var(--radius-xl);
+      box-shadow: var(--shadow-xl);
+      overflow: hidden;
+      width: 100%;
+      max-width: 520px;
+    }
+    .mockup-nav {
+      padding: var(--space-3) var(--space-5);
+      background: var(--color-surface-alt);
+      border-bottom: 1px solid var(--color-border);
+      display: flex;
+      align-items: center;
+      gap: var(--space-3);
+    }
+    .mockup-dots { display: flex; gap: 6px; }
+    .mdot { width: 10px; height: 10px; border-radius: 50%; }
+    .mdot-r { background: #ef4444; } .mdot-y { background: #f59e0b; } .mdot-g { background: #22c55e; }
+    .mockup-addr {
+      flex: 1; background: var(--color-surface); border: 1px solid var(--color-border);
+      border-radius: var(--radius-sm); padding: 4px var(--space-3);
+      font-size: 11px; color: var(--color-text-muted); font-family: var(--font-mono);
+    }
+    .mockup-body { padding: var(--space-5); }
+    .mockup-stats {
+      display: grid; grid-template-columns: repeat(3, 1fr); gap: var(--space-3);
+      margin-bottom: var(--space-5);
+    }
+    .mockup-stat {
+      background: var(--color-surface-alt); border: 1px solid var(--color-border);
+      border-radius: var(--radius-md); padding: var(--space-3);
+    }
+    .mockup-stat__label { font-size: 10px; color: var(--color-text-muted); text-transform: uppercase; letter-spacing: 0.05em; }
+    .mockup-stat__value { font-size: var(--text-xl); font-weight: var(--weight-bold); color: var(--color-text-primary); }
+    .mockup-kb-label { font-size: 11px; font-weight: var(--weight-semibold); color: var(--color-text-muted); text-transform: uppercase; letter-spacing: 0.06em; margin-bottom: var(--space-3); }
+    .mockup-kb-cards { display: flex; flex-direction: column; gap: var(--space-2); }
+    .mockup-kb-card {
+      background: var(--color-surface-alt); border: 1px solid var(--color-border);
+      border-radius: var(--radius-md); padding: var(--space-3) var(--space-4);
+      display: flex; align-items: center; gap: var(--space-3);
+    }
+    .mockup-kb-icon { width: 30px; height: 30px; border-radius: var(--radius-sm); background: var(--color-accent-subtle); color: var(--color-accent); display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+    .mockup-kb-info { flex: 1; }
+    .mockup-kb-name { font-size: var(--text-xs); font-weight: var(--weight-semibold); color: var(--color-text-primary); }
+    .mockup-kb-sub { font-size: 10px; color: var(--color-text-muted); }
+
+    /* FEATURES */
+    .section {
+      max-width: var(--landing-max);
+      margin: 0 auto;
+      padding: var(--space-16) var(--space-6);
+    }
+    .section-label {
+      font-size: var(--text-xs);
+      font-weight: var(--weight-semibold);
+      color: var(--color-accent);
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      margin-bottom: var(--space-3);
+    }
+    .section-title {
+      font-size: var(--text-3xl);
+      font-weight: var(--weight-bold);
+      letter-spacing: -0.02em;
+      margin-bottom: var(--space-4);
+    }
+    .section-subtitle {
+      font-size: var(--text-base);
+      color: var(--color-text-secondary);
+      line-height: var(--leading-relaxed);
+      max-width: 560px;
+      margin-bottom: var(--space-12);
+    }
+    .features-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: var(--space-5);
+    }
+    .feature-card {
+      background: var(--color-surface);
+      border: 1px solid var(--color-border);
+      border-radius: var(--radius-lg);
+      padding: var(--space-6);
+      transition: box-shadow var(--transition-normal), border-color var(--transition-normal), transform var(--transition-normal);
+    }
+    .feature-card:hover {
+      box-shadow: var(--shadow-md);
+      border-color: var(--color-accent-border);
+      transform: translateY(-2px);
+    }
+    .feature-card__icon {
+      width: 44px; height: 44px;
+      border-radius: var(--radius-md);
+      display: flex; align-items: center; justify-content: center;
+      margin-bottom: var(--space-4);
+    }
+    .feature-card__title { font-size: var(--text-base); font-weight: var(--weight-semibold); margin-bottom: var(--space-2); }
+    .feature-card__text { font-size: var(--text-sm); color: var(--color-text-secondary); line-height: var(--leading-relaxed); }
+
+    /* HOW IT WORKS */
+    .how-it-works {
+      background: var(--color-surface);
+      border-top: 1px solid var(--color-border);
+      border-bottom: 1px solid var(--color-border);
+    }
+    .steps {
+      display: flex;
+      align-items: center;
+      gap: 0;
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+    .step {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+      padding: var(--space-6) var(--space-8);
+      flex: 1;
+      min-width: 120px;
+    }
+    .step__num {
+      width: 48px; height: 48px;
+      border-radius: 50%;
+      background: var(--color-accent-subtle);
+      color: var(--color-accent);
+      font-size: var(--text-lg);
+      font-weight: var(--weight-bold);
+      display: flex; align-items: center; justify-content: center;
+      margin-bottom: var(--space-3);
+      border: 2px solid var(--color-accent-border);
+    }
+    .step__label { font-size: var(--text-sm); font-weight: var(--weight-semibold); margin-bottom: var(--space-1); }
+    .step__text { font-size: var(--text-xs); color: var(--color-text-muted); }
+    .step-arrow {
+      color: var(--color-text-muted);
+      font-size: var(--text-2xl);
+      flex-shrink: 0;
+    }
+
+    /* TECH STACK */
+    .tech-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+      gap: var(--space-4);
+    }
+    .tech-card {
+      background: var(--color-surface);
+      border: 1px solid var(--color-border);
+      border-radius: var(--radius-lg);
+      padding: var(--space-5);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: var(--space-3);
+      text-align: center;
+      transition: border-color var(--transition-fast), box-shadow var(--transition-fast);
+    }
+    .tech-card:hover { border-color: var(--color-accent-border); box-shadow: var(--shadow-sm); }
+    .tech-card__icon {
+      width: 40px; height: 40px; border-radius: var(--radius-md);
+      display: flex; align-items: center; justify-content: center;
+      font-size: var(--text-xl); font-weight: var(--weight-bold);
+    }
+    .tech-card__name { font-size: var(--text-sm); font-weight: var(--weight-semibold); }
+    .tech-card__desc { font-size: var(--text-xs); color: var(--color-text-muted); }
+
+    /* CTA */
+    .cta-section {
+      background: var(--color-accent);
+      padding: var(--space-16) var(--space-6);
+      text-align: center;
+    }
+    .cta-section h2 { color: #fff; font-size: var(--text-3xl); margin-bottom: var(--space-4); }
+    .cta-section p  { color: rgba(255,255,255,0.75); font-size: var(--text-lg); margin-bottom: var(--space-8); max-width: 480px; margin-left: auto; margin-right: auto; }
+    .btn--white { background: #fff; color: var(--color-accent); border-color: #fff; }
+    .btn--white:hover { background: #f5f5ff; }
+    .btn--white-outline { background: transparent; color: #fff; border-color: rgba(255,255,255,0.4); }
+    .btn--white-outline:hover { background: rgba(255,255,255,0.1); }
+    .cta-actions { display: flex; gap: var(--space-4); justify-content: center; flex-wrap: wrap; }
+
+    /* FOOTER */
+    .footer {
+      background: var(--color-surface);
+      border-top: 1px solid var(--color-border);
+      padding: var(--space-12) var(--space-6) var(--space-8);
+    }
+    .footer__inner {
+      max-width: var(--landing-max);
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: 2fr 1fr 1fr 1fr;
+      gap: var(--space-8);
+    }
+    .footer__brand p { font-size: var(--text-sm); color: var(--color-text-secondary); margin-top: var(--space-3); line-height: var(--leading-relaxed); max-width: 280px; }
+    .footer__col-title { font-size: var(--text-xs); font-weight: var(--weight-semibold); color: var(--color-text-muted); text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: var(--space-4); }
+    .footer__links { display: flex; flex-direction: column; gap: var(--space-2); }
+    .footer__link { font-size: var(--text-sm); color: var(--color-text-secondary); transition: color var(--transition-fast); }
+    .footer__link:hover { color: var(--color-text-primary); text-decoration: none; }
+    .footer__bottom {
+      max-width: var(--landing-max); margin: var(--space-8) auto 0;
+      padding-top: var(--space-6); border-top: 1px solid var(--color-border);
+      display: flex; align-items: center; justify-content: space-between;
+      font-size: var(--text-xs); color: var(--color-text-muted); flex-wrap: wrap; gap: var(--space-4);
+    }
+
+    /* Responsive landing */
+    @media (max-width: 900px) {
+      .hero { grid-template-columns: 1fr; }
+      .hero__visual { display: none; }
+      .hero__title { font-size: var(--text-3xl); }
+      .footer__inner { grid-template-columns: 1fr 1fr; gap: var(--space-6); }
+      .steps { gap: 0; }
+      .step-arrow { display: none; }
+    }
+    @media (max-width: 600px) {
+      .nav-links { display: none; }
+      .footer__inner { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- ── Navigation ── -->
+<nav class="landing-nav" role="navigation" aria-label="Main navigation">
+  <div class="landing-nav__inner">
+    <a href="index.html" class="nav-logo" aria-label="KnowSphere Home">
+      <span class="nav-logo__mark" aria-hidden="true">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg>
+      </span>
+      <span class="nav-logo__text">KnowSphere</span>
+    </a>
+    <div class="nav-links" role="list">
+      <a href="#features" class="nav-link" role="listitem">Features</a>
+      <a href="#how-it-works" class="nav-link" role="listitem">How it Works</a>
+      <a href="#technology" class="nav-link" role="listitem">Technology</a>
+    </div>
+    <div class="nav-actions">
+      <button class="icon-btn" data-theme-toggle aria-label="Toggle theme" title="Toggle theme">
+        <svg class="icon-moon" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+        <svg class="icon-sun" style="display:none" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>
+      </button>
+      <a href="pages/login.html" class="btn btn--secondary btn--sm">Sign In</a>
+      <a href="pages/register.html" class="btn btn--primary btn--sm">Get Started</a>
+    </div>
+  </div>
+</nav>
+
+<!-- ── Hero ── -->
+<section class="hero" aria-labelledby="hero-title">
+  <div class="hero__copy">
+    <div class="hero__badge" aria-label="New release">
+      <svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor"><circle cx="12" cy="12" r="12"/></svg>
+      RAG-Powered Intelligence
+    </div>
+    <h1 class="hero__title" id="hero-title">
+      Your Documents.<br>Your Knowledge.<br><span>Your AI.</span>
+    </h1>
+    <p class="hero__subtitle">
+      Build intelligent knowledge bases from your documents and get accurate, context-aware answers using Retrieval-Augmented Generation.
+    </p>
+    <div class="hero__actions">
+      <a href="pages/register.html" class="btn btn--primary btn--lg">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M13 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V9z"/><polyline points="13 2 13 9 20 9"/></svg>
+        Get Started Free
+      </a>
+      <a href="pages/login.html" class="btn btn--secondary btn--lg">
+        Sign In
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg>
+      </a>
+    </div>
+  </div>
+
+  <div class="hero__visual" aria-hidden="true">
+    <div class="dashboard-mockup">
+      <div class="mockup-nav">
+        <div class="mockup-dots">
+          <span class="mdot mdot-r"></span><span class="mdot mdot-y"></span><span class="mdot mdot-g"></span>
+        </div>
+        <div class="mockup-addr">app.knowsphere.io/dashboard</div>
+      </div>
+      <div class="mockup-body">
+        <div class="mockup-stats">
+          <div class="mockup-stat"><div class="mockup-stat__label">Bases</div><div class="mockup-stat__value">4</div></div>
+          <div class="mockup-stat"><div class="mockup-stat__label">Docs</div><div class="mockup-stat__value">23</div></div>
+          <div class="mockup-stat"><div class="mockup-stat__label">Queries</div><div class="mockup-stat__value">142</div></div>
+        </div>
+        <div class="mockup-kb-label">Knowledge Bases</div>
+        <div class="mockup-kb-cards">
+          <div class="mockup-kb-card">
+            <div class="mockup-kb-icon"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg></div>
+            <div class="mockup-kb-info"><div class="mockup-kb-name">Company Policy</div><div class="mockup-kb-sub">8 documents · Ready</div></div>
+            <span class="badge badge--ready" style="font-size:10px">Ready</span>
+          </div>
+          <div class="mockup-kb-card">
+            <div class="mockup-kb-icon"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg></div>
+            <div class="mockup-kb-info"><div class="mockup-kb-name">Product Docs</div><div class="mockup-kb-sub">12 documents · Ready</div></div>
+            <span class="badge badge--ready" style="font-size:10px">Ready</span>
+          </div>
+          <div class="mockup-kb-card">
+            <div class="mockup-kb-icon"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg></div>
+            <div class="mockup-kb-info"><div class="mockup-kb-name">Research Papers</div><div class="mockup-kb-sub">3 documents · Processing</div></div>
+            <span class="badge badge--processing" style="font-size:10px">Processing</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── Features ── -->
+<section id="features" class="section" aria-labelledby="features-title">
+  <div class="section-label">Features</div>
+  <h2 class="section-title" id="features-title">Everything you need to build<br>an intelligent knowledge platform</h2>
+  <p class="section-subtitle">From document upload to AI-generated answers, KnowSphere handles the entire RAG pipeline for you.</p>
+
+  <div class="features-grid">
+    <div class="feature-card">
+      <div class="feature-card__icon" style="background:var(--color-accent-subtle);color:var(--color-accent)">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+      </div>
+      <div class="feature-card__title">Secure Knowledge Bases</div>
+      <p class="feature-card__text">Multi-tenant isolation ensures each user's data is completely private. JWT-authenticated access with zero cross-tenant leakage.</p>
+    </div>
+    <div class="feature-card">
+      <div class="feature-card__icon" style="background:var(--color-success-subtle);color:var(--color-success)">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14.5 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7.5L14.5 2z"/><polyline points="14 2 14 8 20 8"/></svg>
+      </div>
+      <div class="feature-card__title">Document Intelligence</div>
+      <p class="feature-card__text">Upload PDF, DOCX, and TXT files. Documents are automatically chunked, embedded, and indexed for semantic search.</p>
+    </div>
+    <div class="feature-card">
+      <div class="feature-card__icon" style="background:var(--color-warning-subtle);color:var(--color-warning)">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+      </div>
+      <div class="feature-card__title">Semantic Search</div>
+      <p class="feature-card__text">HuggingFace embeddings stored in Qdrant enable lightning-fast semantic retrieval across thousands of document chunks.</p>
+    </div>
+    <div class="feature-card">
+      <div class="feature-card__icon" style="background:var(--color-info-subtle);color:var(--color-info)">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+      </div>
+      <div class="feature-card__title">RAG-Powered Answers</div>
+      <p class="feature-card__text">LangChain orchestrates retrieval and generation, passing the most relevant context to the LLM for grounded responses.</p>
+    </div>
+    <div class="feature-card">
+      <div class="feature-card__icon" style="background:#fdf2f8;color:#9333ea">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
+      </div>
+      <div class="feature-card__title">Source-Aware Responses</div>
+      <p class="feature-card__text">Every answer is backed by traceable sources. See exactly which document and page informed the AI's response.</p>
+    </div>
+    <div class="feature-card">
+      <div class="feature-card__icon" style="background:#fff7ed;color:#f97316">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+      </div>
+      <div class="feature-card__title">Multi-Tenant Ready</div>
+      <p class="feature-card__text">Built for teams. Each user gets their own isolated workspace, knowledge bases, and document storage in Supabase.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ── How It Works ── -->
+<section id="how-it-works" class="how-it-works" aria-labelledby="how-title">
+  <div class="section">
+    <div class="section-label">How It Works</div>
+    <h2 class="section-title" id="how-title">From documents to answers in 5 steps</h2>
+    <p class="section-subtitle">KnowSphere automates the entire RAG pipeline — just upload your documents and start asking questions.</p>
+    <div class="steps" role="list">
+      <div class="step" role="listitem">
+        <div class="step__num">1</div>
+        <div class="step__label">Upload</div>
+        <div class="step__text">Drop your PDFs, DOCX, or TXT files into any knowledge base</div>
+      </div>
+      <div class="step-arrow" aria-hidden="true">→</div>
+      <div class="step" role="listitem">
+        <div class="step__num">2</div>
+        <div class="step__label">Process</div>
+        <div class="step__text">Documents are parsed and split into semantic chunks</div>
+      </div>
+      <div class="step-arrow" aria-hidden="true">→</div>
+      <div class="step" role="listitem">
+        <div class="step__num">3</div>
+        <div class="step__label">Embed</div>
+        <div class="step__text">HuggingFace models generate vector embeddings</div>
+      </div>
+      <div class="step-arrow" aria-hidden="true">→</div>
+      <div class="step" role="listitem">
+        <div class="step__num">4</div>
+        <div class="step__label">Retrieve</div>
+        <div class="step__text">Qdrant finds the most relevant context for your question</div>
+      </div>
+      <div class="step-arrow" aria-hidden="true">→</div>
+      <div class="step" role="listitem">
+        <div class="step__num">5</div>
+        <div class="step__label">Generate</div>
+        <div class="step__text">LLM synthesizes a grounded, accurate answer</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── Technology ── -->
+<section id="technology" class="section" aria-labelledby="tech-title">
+  <div class="section-label">Technology</div>
+  <h2 class="section-title" id="tech-title">Built on best-in-class infrastructure</h2>
+  <p class="section-subtitle">KnowSphere is powered by a modern, production-ready stack — no compromises.</p>
+  <div class="tech-grid">
+    <div class="tech-card">
+      <div class="tech-card__icon" style="background:#fff1f2;color:#ef4444;font-size:1.4rem">⚡</div>
+      <div class="tech-card__name">FastAPI</div>
+      <div class="tech-card__desc">High-performance async backend</div>
+    </div>
+    <div class="tech-card">
+      <div class="tech-card__icon" style="background:#f0fdf4;color:#16a34a;font-size:1.4rem">🍃</div>
+      <div class="tech-card__name">MongoDB</div>
+      <div class="tech-card__desc">Flexible document storage</div>
+    </div>
+    <div class="tech-card">
+      <div class="tech-card__icon" style="background:#f0f9ff;color:#0ea5e9;font-size:1.4rem">🗄️</div>
+      <div class="tech-card__name">Supabase</div>
+      <div class="tech-card__desc">Secure file storage</div>
+    </div>
+    <div class="tech-card">
+      <div class="tech-card__icon" style="background:#fdf4ff;color:#a855f7;font-size:1.4rem">🔮</div>
+      <div class="tech-card__name">Qdrant</div>
+      <div class="tech-card__desc">Vector similarity search</div>
+    </div>
+    <div class="tech-card">
+      <div class="tech-card__icon" style="background:#fffbeb;color:#f59e0b;font-size:1.4rem">🤗</div>
+      <div class="tech-card__name">HuggingFace</div>
+      <div class="tech-card__desc">State-of-the-art embeddings</div>
+    </div>
+    <div class="tech-card">
+      <div class="tech-card__icon" style="background:#f0fdf4;color:#22c55e;font-size:1.4rem">🔗</div>
+      <div class="tech-card__name">LangChain</div>
+      <div class="tech-card__desc">RAG orchestration framework</div>
+    </div>
+  </div>
+</section>
+
+<!-- ── CTA ── -->
+<section class="cta-section" aria-labelledby="cta-title">
+  <h2 id="cta-title">Ready to make your documents intelligent?</h2>
+  <p>Join teams using KnowSphere to unlock the knowledge hidden in their documents.</p>
+  <div class="cta-actions">
+    <a href="pages/register.html" class="btn btn--white btn--lg">Start Building Free</a>
+    <a href="pages/login.html" class="btn btn--white-outline btn--lg">Sign In</a>
+  </div>
+</section>
+
+<!-- ── Footer ── -->
+<footer class="footer" role="contentinfo">
+  <div class="footer__inner">
+    <div class="footer__brand">
+      <a href="index.html" class="nav-logo" aria-label="KnowSphere" style="margin-bottom:var(--space-3)">
+        <span class="nav-logo__mark"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg></span>
+        <span class="nav-logo__text">KnowSphere</span>
+      </a>
+      <p>The intelligent knowledge base platform for teams who need accurate, source-backed answers from their documents.</p>
+    </div>
+    <div>
+      <div class="footer__col-title">Product</div>
+      <div class="footer__links">
+        <a href="#features" class="footer__link">Features</a>
+        <a href="#how-it-works" class="footer__link">How it Works</a>
+        <a href="#technology" class="footer__link">Technology</a>
+      </div>
+    </div>
+    <div>
+      <div class="footer__col-title">Account</div>
+      <div class="footer__links">
+        <a href="pages/register.html" class="footer__link">Sign Up</a>
+        <a href="pages/login.html" class="footer__link">Sign In</a>
+        <a href="pages/dashboard.html" class="footer__link">Dashboard</a>
+      </div>
+    </div>
+    <div>
+      <div class="footer__col-title">Stack</div>
+      <div class="footer__links">
+        <span class="footer__link">FastAPI</span>
+        <span class="footer__link">MongoDB</span>
+        <span class="footer__link">Qdrant</span>
+        <span class="footer__link">LangChain</span>
+      </div>
+    </div>
+  </div>
+  <div class="footer__bottom">
+    <span>© 2025 KnowSphere. All rights reserved.</span>
+    <span>Built with FastAPI · LangChain · Qdrant · HuggingFace</span>
+  </div>
+</footer>
+
+<script src="js/config.js"></script>
+<script src="js/utils.js"></script>
+<script>
+  Theme.init();
+  document.querySelectorAll("[data-theme-toggle]").forEach(btn => {
+    btn.addEventListener("click", () => Theme.toggle());
+  });
+
+  // Smooth scroll for nav links
+  document.querySelectorAll('a[href^="#"]').forEach(a => {
+    a.addEventListener('click', e => {
+      const target = document.querySelector(a.getAttribute('href'));
+      if (target) {
+        e.preventDefault();
+        target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }
+    });
+  });
+</script>
+</body>
+</html>

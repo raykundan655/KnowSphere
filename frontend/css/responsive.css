@@ -1,0 +1,178 @@
+/**
+ * responsive.css
+ * Mobile-first responsive overrides.
+ * Import last so rules can override global/component styles.
+ */
+
+/* ─── Tablet ────────────────────────────────────────────────────────────────── */
+@media (max-width: 1024px) {
+  .sources-panel { display: none; }
+  .chat-sidebar { width: 240px; }
+}
+
+/* ─── Mobile/Tablet Breakpoint ─────────────────────────────────────────────── */
+@media (max-width: 768px) {
+
+  /* Sidebar */
+  .sidebar {
+    transform: translateX(-100%);
+    box-shadow: var(--shadow-xl);
+    z-index: var(--z-sidebar);
+  }
+  .sidebar--open { transform: translateX(0); }
+
+  .sidebar-toggle {
+    display: flex !important;
+  }
+
+  .main-content { margin-left: 0; }
+
+  /* Topnav */
+  .topnav { padding: 0 var(--space-4); gap: var(--space-3); }
+  .topnav__greeting h2 { font-size: var(--text-base); }
+
+  /* Search */
+  .search-input { width: 160px; }
+  .search-input:focus { width: 200px; }
+
+  /* Page content */
+  .page-content { padding: var(--space-4); }
+
+  /* Page header */
+  .page-header {
+    flex-direction: column;
+    gap: var(--space-4);
+  }
+  .page-header__actions { width: 100%; }
+  .page-header__actions .btn { flex: 1; justify-content: center; }
+
+  /* Stats grid */
+  .stats-grid { grid-template-columns: 1fr 1fr; }
+
+  /* KB grid */
+  .kb-grid { grid-template-columns: 1fr; }
+
+  /* Auth page */
+  .auth-page { grid-template-columns: 1fr; }
+  .auth-visual { display: none; }
+  .auth-panel { padding: var(--space-8) var(--space-5); }
+
+  /* KB hero */
+  .kb-hero {
+    flex-direction: column;
+    gap: var(--space-4);
+    padding: var(--space-5);
+  }
+  .kb-hero__actions {
+    width: 100%;
+    flex-direction: column;
+  }
+  .kb-hero__actions .btn { width: 100%; justify-content: center; }
+
+  /* Document table → cards */
+  .document-table { display: none; }
+  .doc-card {
+    display: flex;
+    align-items: flex-start;
+    gap: var(--space-3);
+    padding: var(--space-4) var(--space-5);
+    border-bottom: 1px solid var(--color-border-light);
+  }
+  .doc-card:last-child { border-bottom: none; }
+  .doc-card__info { flex: 1; min-width: 0; }
+  .doc-card__name {
+    font-size: var(--text-sm);
+    font-weight: var(--weight-medium);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+  .doc-card__meta {
+    font-size: var(--text-xs);
+    color: var(--color-text-muted);
+    margin-top: 2px;
+  }
+  .doc-card__actions {
+    display: flex;
+    gap: var(--space-2);
+    flex-shrink: 0;
+  }
+
+  /* Chat layout */
+  .chat-layout { flex-direction: column; height: auto; }
+  .chat-sidebar {
+    width: 100%;
+    height: auto;
+    border-right: none;
+    border-bottom: 1px solid var(--color-border);
+    max-height: 200px;
+    flex-direction: row;
+    align-items: center;
+    padding: var(--space-4);
+    gap: var(--space-4);
+    overflow-x: auto;
+    overflow-y: hidden;
+  }
+  .chat-sidebar__header {
+    border-bottom: none;
+    padding: 0;
+    flex-shrink: 0;
+  }
+  .chat-sidebar__stats {
+    flex-direction: row;
+    border-bottom: none;
+    border-left: 1px solid var(--color-border);
+    padding: 0 var(--space-5);
+    gap: var(--space-6);
+    flex-shrink: 0;
+  }
+  .chat-sidebar__stat { flex-direction: column; align-items: flex-start; }
+  .chat-sidebar__actions { display: none; }
+
+  .chat-main {
+    height: calc(100vh - var(--topnav-height) - 200px);
+    display: flex;
+    flex-direction: column;
+  }
+
+  .chat-messages { padding: var(--space-4); }
+  .chat-input-area { padding: var(--space-3) var(--space-4); }
+
+  .message__content { max-width: 90%; }
+
+  /* Modals */
+  .modal { align-items: flex-end; padding: 0; }
+  .modal__panel {
+    border-bottom-left-radius: 0;
+    border-bottom-right-radius: 0;
+    max-width: 100%;
+    width: 100%;
+    max-height: 90vh;
+    overflow-y: auto;
+    transform: translateY(32px);
+  }
+  .modal--open .modal__panel { transform: translateY(0); }
+
+  /* Toast */
+  .toast-container {
+    bottom: var(--space-4);
+    right: var(--space-4);
+    left: var(--space-4);
+  }
+  .toast { min-width: 0; }
+}
+
+/* ─── Very Small ────────────────────────────────────────────────────────────── */
+@media (max-width: 420px) {
+  .stats-grid { grid-template-columns: 1fr; }
+  h1 { font-size: var(--text-2xl); }
+
+  .kb-stats-row { gap: var(--space-4); }
+
+  .chat-topbar__actions .btn span { display: none; }
+}
+
+/* ─── Wide screens ───────────────────────────────────────────────────────────── */
+@media (min-width: 1440px) {
+  .kb-grid { grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); }
+}

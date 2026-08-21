@@ -1,0 +1,98 @@
+In MongoDB we have:
+
+Database
+   ↓
+Collection
+   ↓
+Documents
+
+
+-------------------------------------
+
+Qdrant has:
+
+Cluster
+   ↓
+Collection
+   ↓
+Points
+
+A point is basically:
+vector + payload
+
+For example:
+{
+    "id": "chunk-123",
+    "vector": [0.12, -0.43, 0.81, ...],
+    "payload": {
+        "user_id": "user123",
+        "kb_id": "kb456",
+        "document_id": "doc789",
+        "chunk_index": 3,
+        "text": "Machine learning is..."
+    }
+}
+
+
+
+------architecture
+
+     documents.py
+      │
+      │ document uploaded
+      ▼
+document_processing.py
+      │
+      ├── Find MongoDB metadata
+      ├── Download file from Supabase
+      └── Detect file type
+             │
+             │ file + file_type
+             ▼
+       document_pipeline.py
+             │
+             ▼
+       Document Loader
+             │
+             ├── PDF → PyPDFLoader
+             ├── DOCX → DocxLoader
+             └── TXT → TextLoader
+             │
+             ▼
+          Documents
+             │
+             ▼
+          Chunking
+             │
+             ▼
+       SentenceTransformer
+             │
+             ▼
+          Embeddings
+             │
+             ▼
+         Qdrant Cloud
+
+
+
+
+
+--------upabase Storage hierarchy
+Supabase
+   ↓
+Storage
+   ↓
+Bucket
+   ↓
+Objects
+   ↓
+File data
+
+
+
+
+
+#python -m http.server 8080->run web server for frontend
+
+
+#for upload and Download on supabase we have to add policy without policy supabase will not work

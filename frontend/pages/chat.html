@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Chat — KnowSphere</title>
+  <meta name="description" content="Chat with your knowledge base using AI-powered RAG." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link rel="stylesheet" href="../css/global.css" />
+  <link rel="stylesheet" href="../css/dashboard.css" />
+  <link rel="stylesheet" href="../css/chat.css" />
+  <link rel="stylesheet" href="../css/responsive.css" />
+</head>
+<body>
+
+<div class="app-layout">
+  <!-- ── Sidebar ── -->
+  <aside id="sidebar" class="sidebar" role="navigation" aria-label="Main sidebar">
+    <div class="sidebar__logo">
+      <span class="sidebar__logo-mark" aria-hidden="true">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg>
+      </span>
+      <span class="sidebar__logo-text">KnowSphere</span>
+    </div>
+    <nav class="sidebar__nav" role="list">
+      <a href="dashboard.html" class="nav-item" role="listitem">
+        <svg class="nav-item__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg>
+        Dashboard
+      </a>
+      <a href="dashboard.html" class="nav-item nav-item--active" role="listitem">
+        <svg class="nav-item__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg>
+        Knowledge Bases
+      </a>
+      <a href="settings.html" class="nav-item" role="listitem">
+        <svg class="nav-item__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83-2.83l.06-.06A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 2.83-2.83l.06.06A1.65 1.65 0 0 0 9 4.68a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>
+        Settings
+      </a>
+      <div class="divider" style="margin:var(--space-3) 0"></div>
+      <button id="logout-btn" class="nav-item nav-item--danger" type="button" aria-label="Log out">
+        <svg class="nav-item__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg>
+        Logout
+      </button>
+    </nav>
+    <div class="sidebar__footer">
+      <div class="sidebar__user" id="sidebar-user" role="button" tabindex="0" aria-label="User profile">
+        <div class="user-avatar" id="user-avatar" aria-hidden="true">?</div>
+        <div class="user-info">
+          <div class="user-info__name" id="user-name">User</div>
+          <div class="user-info__email" id="user-email"></div>
+        </div>
+      </div>
+    </div>
+  </aside>
+
+  <div id="sidebar-overlay" class="overlay" aria-hidden="true"></div>
+
+  <!-- ── Main Content ── -->
+  <div class="main-content">
+    <!-- Top Nav -->
+    <header class="topnav" role="banner">
+      <button id="sidebar-toggle" class="sidebar-toggle" aria-expanded="false" aria-controls="sidebar" aria-label="Toggle navigation">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+      </button>
+      <div class="topnav__greeting">
+        <nav aria-label="Breadcrumb">
+          <ol style="display:flex;align-items:center;gap:var(--space-2);list-style:none;font-size:var(--text-sm)">
+            <li><a href="dashboard.html" style="color:var(--color-text-muted)">Dashboard</a></li>
+            <li style="color:var(--color-text-muted)" aria-hidden="true">/</li>
+            <li><a href="#" id="kb-breadcrumb-link" style="color:var(--color-text-muted)" id="kb-bc-link">Knowledge Base</a></li>
+            <li style="color:var(--color-text-muted)" aria-hidden="true">/</li>
+            <li style="color:var(--color-text-primary);font-weight:var(--weight-medium)" aria-current="page">Chat</li>
+          </ol>
+        </nav>
+      </div>
+      <div class="topnav__actions">
+        <button class="icon-btn" data-theme-toggle aria-label="Toggle theme" title="Toggle theme">
+          <svg class="icon-moon" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+          <svg class="icon-sun" style="display:none" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>
+        </button>
+      </div>
+    </header>
+
+    <!-- ── Chat Layout ── -->
+    <div class="chat-layout" role="main">
+
+      <!-- Left: KB Info Panel -->
+      <aside class="chat-sidebar" aria-label="Knowledge base information">
+        <div class="chat-sidebar__header">
+          <div class="chat-sidebar__kb-icon" aria-hidden="true">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg>
+          </div>
+          <div class="chat-sidebar__kb-name" id="sidebar-kb-name">Loading...</div>
+          <p class="chat-sidebar__kb-desc" id="sidebar-kb-desc"></p>
+        </div>
+
+        <div class="chat-sidebar__stats">
+          <div class="chat-sidebar__stat">
+            <span class="chat-sidebar__stat-label">Documents</span>
+            <span class="chat-sidebar__stat-value" id="sidebar-doc-count">—</span>
+          </div>
+          <div class="chat-sidebar__stat">
+            <span class="chat-sidebar__stat-label">Status</span>
+            <span class="chat-sidebar__stat-value" id="sidebar-status">—</span>
+          </div>
+        </div>
+
+        <div class="chat-sidebar__actions">
+          <a id="view-kb-link" href="#" class="btn btn--secondary btn--sm" style="width:100%;justify-content:center">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14.5 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7.5L14.5 2z"/></svg>
+            View Documents
+          </a>
+          <button id="clear-chat-btn" class="btn btn--ghost btn--sm" style="width:100%;justify-content:center" type="button">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="3 6 5 6 21 6"/><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a1 1 0 0 1 1-1h4a1 1 0 0 1 1 1v2"/></svg>
+            Clear Chat
+          </button>
+        </div>
+      </aside>
+
+      <!-- Center: Chat -->
+      <section class="chat-main" aria-label="Chat interface">
+        <div class="chat-topbar">
+          <div>
+            <div class="chat-topbar__title" id="chat-title">Chat with Knowledge Base</div>
+            <div class="chat-topbar__sub" id="chat-sub">Ask anything about your documents</div>
+          </div>
+          <div class="chat-topbar__actions">
+            <button id="toggle-sources-btn" class="btn btn--secondary btn--sm" type="button" aria-expanded="false" aria-controls="sources-panel">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14.5 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7.5L14.5 2z"/></svg>
+              <span>Sources</span>
+            </button>
+          </div>
+        </div>
+
+        <!-- Messages -->
+        <div id="chat-messages" class="chat-messages" role="log" aria-live="polite" aria-label="Chat messages" aria-atomic="false">
+          <!-- Welcome state shown by JS -->
+        </div>
+
+        <!-- Input -->
+        <div class="chat-input-area">
+          <div class="chat-input-wrapper">
+            <textarea
+              id="chat-input"
+              class="chat-input"
+              placeholder="Ask anything about your knowledge base..."
+              rows="1"
+              aria-label="Chat message input"
+              aria-multiline="true"
+            ></textarea>
+            <button id="send-btn" class="chat-send-btn" aria-label="Send message" title="Send (Enter)" disabled>
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>
+            </button>
+          </div>
+          <p class="chat-input-hint">
+            <kbd>Enter</kbd> to send · <kbd>Shift+Enter</kbd> for new line
+          </p>
+        </div>
+      </section>
+
+      <!-- Right: Sources Panel -->
+      <aside id="sources-panel" class="sources-panel sources-panel--hidden" aria-label="Sources">
+        <div class="sources-panel__header">
+          <span class="sources-panel__title">Sources</span>
+          <button class="btn btn--ghost btn--icon" id="close-sources-btn" aria-label="Close sources panel">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+          </button>
+        </div>
+        <div id="sources-panel-body" class="sources-panel__body">
+          <div class="sources-panel__empty" role="status">
+            <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14.5 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7.5L14.5 2z"/><polyline points="14 2 14 8 20 8"/></svg>
+            <span>Sources will appear here after you ask a question.</span>
+          </div>
+        </div>
+      </aside>
+
+    </div><!-- /chat-layout -->
+  </div><!-- /main-content -->
+</div><!-- /app-layout -->
+
+<script src="../js/config.js"></script>
+<script src="../js/auth.js"></script>
+<script src="../js/utils.js"></script>
+<script src="../js/api.js"></script>
+<script src="../js/chat.js"></script>
+</body>
+</html>

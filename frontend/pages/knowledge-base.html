@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Knowledge Base — KnowSphere</title>
+  <meta name="description" content="Manage documents in your KnowSphere knowledge base." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link rel="stylesheet" href="../css/global.css" />
+  <link rel="stylesheet" href="../css/dashboard.css" />
+  <link rel="stylesheet" href="../css/knowledge-base.css" />
+  <link rel="stylesheet" href="../css/responsive.css" />
+</head>
+<body>
+
+<div class="app-layout">
+
+  <!-- ── Sidebar ── -->
+  <aside id="sidebar" class="sidebar" role="navigation" aria-label="Main sidebar">
+    <div class="sidebar__logo">
+      <span class="sidebar__logo-mark" aria-hidden="true">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg>
+      </span>
+      <span class="sidebar__logo-text">KnowSphere</span>
+    </div>
+    <nav class="sidebar__nav" role="list">
+      <a href="dashboard.html" class="nav-item" role="listitem">
+        <svg class="nav-item__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg>
+        Dashboard
+      </a>
+      <a href="dashboard.html" class="nav-item nav-item--active" role="listitem" aria-current="page">
+        <svg class="nav-item__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg>
+        Knowledge Bases
+      </a>
+      <a href="settings.html" class="nav-item" role="listitem">
+        <svg class="nav-item__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83-2.83l.06-.06A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 2.83-2.83l.06.06A1.65 1.65 0 0 0 9 4.68a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>
+        Settings
+      </a>
+      <div class="divider" style="margin:var(--space-3) 0"></div>
+      <button id="logout-btn" class="nav-item nav-item--danger" type="button" aria-label="Log out">
+        <svg class="nav-item__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg>
+        Logout
+      </button>
+    </nav>
+    <div class="sidebar__footer">
+      <div class="sidebar__user" id="sidebar-user" role="button" tabindex="0" aria-label="User profile">
+        <div class="user-avatar" id="user-avatar" aria-hidden="true">?</div>
+        <div class="user-info">
+          <div class="user-info__name" id="user-name">User</div>
+          <div class="user-info__email" id="user-email"></div>
+        </div>
+      </div>
+    </div>
+  </aside>
+
+  <div id="sidebar-overlay" class="overlay" aria-hidden="true"></div>
+
+  <!-- ── Main Content ── -->
+  <main class="main-content" role="main">
+    <header class="topnav" role="banner">
+      <button id="sidebar-toggle" class="sidebar-toggle" aria-expanded="false" aria-controls="sidebar" aria-label="Toggle navigation">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+      </button>
+      <div class="topnav__greeting">
+        <nav aria-label="Breadcrumb">
+          <ol style="display:flex;align-items:center;gap:var(--space-2);list-style:none;font-size:var(--text-sm)">
+            <li><a href="dashboard.html" style="color:var(--color-text-muted)">Dashboard</a></li>
+            <li style="color:var(--color-text-muted)" aria-hidden="true">/</li>
+            <li style="color:var(--color-text-primary);font-weight:var(--weight-medium)" id="breadcrumb-name" aria-current="page">Knowledge Base</li>
+          </ol>
+        </nav>
+      </div>
+      <div class="topnav__actions">
+        <button class="icon-btn" data-theme-toggle aria-label="Toggle theme" title="Toggle theme">
+          <svg class="icon-moon" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+          <svg class="icon-sun" style="display:none" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>
+        </button>
+      </div>
+    </header>
+
+    <div class="page-content">
+
+      <!-- KB Hero -->
+      <div class="kb-hero" id="kb-hero">
+        <div class="kb-hero__left">
+          <div class="kb-hero__icon" aria-hidden="true">
+            <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg>
+          </div>
+          <div>
+            <h1 class="kb-hero__name" id="kb-name">Loading...</h1>
+            <p class="kb-hero__desc" id="kb-description"></p>
+            <div class="kb-stats-row" id="kb-stats-row">
+              <div class="kb-stat">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14.5 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7.5L14.5 2z"/></svg>
+                <span class="kb-stat__value" id="stat-total">—</span>&nbsp;documents
+              </div>
+              <div class="kb-stat">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg>
+                <span class="kb-stat__value" id="stat-ready">—</span>&nbsp;ready
+              </div>
+              <div class="kb-stat">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+                <span id="stat-created">—</span>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="kb-hero__actions">
+          <button id="upload-trigger-btn" class="btn btn--secondary" type="button">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
+            Upload Document
+          </button>
+          <button id="chat-btn" class="btn btn--primary" type="button">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+            Chat with KB
+          </button>
+        </div>
+      </div>
+
+      <!-- Upload Section -->
+      <div class="upload-section" id="upload-section">
+        <div class="section-header" style="margin-bottom:var(--space-4)">
+          <div class="section-header__title">Upload Documents</div>
+        </div>
+        <!-- Drop Zone -->
+        <div id="upload-zone" class="upload-zone" role="region" aria-label="File upload area" tabindex="0">
+          <div class="upload-zone__icon" aria-hidden="true">
+            <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
+          </div>
+          <div class="upload-zone__title">Drop your files here</div>
+          <p class="upload-zone__subtitle">or <button class="btn btn--secondary btn--sm" id="browse-btn" type="button">Browse Files</button></p>
+          <div class="upload-zone__types">
+            <span class="badge badge--default">PDF</span>
+            <span class="badge badge--default">DOCX</span>
+            <span class="badge badge--default">TXT</span>
+          </div>
+          <p class="upload-zone__subtitle" style="margin-top:var(--space-2)">Maximum file size: 50 MB</p>
+        </div>
+        <input type="file" id="file-input" accept=".pdf,.docx,.txt,application/pdf,application/vnd.openxmlformats-officedocument.wordprocessingml.document,text/plain" multiple aria-label="File input" />
+        <!-- Upload Queue -->
+        <div id="upload-queue" class="upload-queue" aria-live="polite" aria-label="Upload queue"></div>
+      </div>
+
+      <!-- Document List -->
+      <div class="document-list" id="document-list">
+        <div class="document-list__header">
+          <div class="document-list__title">Documents</div>
+          <span id="doc-count-badge" class="badge badge--default">0</span>
+        </div>
+        <div id="document-list-body" aria-live="polite" aria-label="Documents list">
+          <!-- Populated by JS -->
+        </div>
+      </div>
+
+    </div><!-- /page-content -->
+  </main>
+</div>
+
+<!-- ── Delete Document Modal ── -->
+<div id="delete-doc-modal" class="modal" role="dialog" aria-modal="true" aria-labelledby="delete-doc-title" aria-hidden="true">
+  <div class="modal__panel">
+    <div class="modal__header">
+      <div>
+        <h2 class="modal__title" id="delete-doc-title">Delete Document</h2>
+        <p class="modal__subtitle">This action cannot be undone.</p>
+      </div>
+      <button class="modal__close" onclick="closeModal('delete-doc-modal')" aria-label="Close modal">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+      </button>
+    </div>
+    <div class="modal__body">
+      <p>You are about to permanently delete <strong id="delete-doc-name">this document</strong>.</p>
+      <div class="delete-modal__warning" role="alert">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m21.73 18-8-14a2 2 0 0 0-3.48 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3Z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+        <p>This will remove the document and its indexed vectors from Qdrant. This cannot be undone.</p>
+      </div>
+    </div>
+    <div class="modal__footer">
+      <button class="btn btn--secondary" onclick="closeModal('delete-doc-modal')" type="button">Cancel</button>
+      <button id="delete-doc-confirm" class="btn btn--danger-solid" type="button" aria-live="polite">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="3 6 5 6 21 6"/><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a1 1 0 0 1 1-1h4a1 1 0 0 1 1 1v2"/></svg>
+        Delete Document
+      </button>
+    </div>
+  </div>
+</div>
+
+<script src="../js/config.js"></script>
+<script src="../js/auth.js"></script>
+<script src="../js/utils.js"></script>
+<script src="../js/api.js"></script>
+<script src="../js/knowledge-base.js"></script>
+</body>
+</html>

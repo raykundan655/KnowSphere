@@ -1,0 +1,29 @@
+# Environments
+.env
+myenv/
+venv/
+ENV/
+env/
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+
+# ReportLab & generated PDFs
+KnowSphere_Interview_QA*.pdf
+KnowledgeAI_Interview_QA*.pdf
+.dist/
+
+# Node/Vercel
+node_modules/
+.vercel/
+
+# Editors
+.vscode/
+.idea/
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.swp

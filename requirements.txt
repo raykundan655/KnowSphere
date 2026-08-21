@@ -1,0 +1,28 @@
+fastapi
+uvicorn 
+pydantic
+email-validator
+pymongo
+python-dotenv
+"pwdlib[bcrypt]"
+PyJWT
+supabase
+langchain
+langchain-core
+langchain-community
+langchain-huggingface
+langchain-google-genai
+langchain-openai
+langchain-text-splitters
+pypdf
+docx2txt
+sentence-transformers
+qdrant-client
+langchain-xai
+#use for grok integration
+python-multipart
+#FastAPI uses multipart/form-data to receive uploaded files
+
+certifi
+
+

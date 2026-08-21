@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Sign In — KnowSphere</title>
+  <meta name="description" content="Sign in to your KnowSphere account to access your knowledge bases and AI-powered document Q&A." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link rel="stylesheet" href="../css/global.css" />
+  <link rel="stylesheet" href="../css/auth.css" />
+</head>
+<body>
+
+<main class="auth-page" role="main">
+  <!-- ── Left: Form Panel ── -->
+  <div class="auth-panel">
+    <div class="auth-panel__inner">
+      <a href="../index.html" class="auth-logo" aria-label="KnowSphere home">
+        <span class="auth-logo__mark" aria-hidden="true">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg>
+        </span>
+        <span class="auth-logo__text">KnowSphere</span>
+      </a>
+
+      <div class="auth-header">
+        <h1 class="auth-header__title">Welcome back</h1>
+        <p class="auth-header__subtitle">Sign in to access your knowledge bases and AI-powered Q&A.</p>
+      </div>
+
+      <!-- Error Banner -->
+      <div id="login-error" class="auth-error" role="alert" aria-live="polite">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+        <span id="login-error-text"></span>
+      </div>
+
+      <form id="login-form" class="auth-form" novalidate aria-label="Login form">
+        <!-- Email -->
+        <div class="form-group">
+          <label for="email" class="form-label">Email address <span class="required" aria-label="required">*</span></label>
+          <div class="input-wrapper">
+            <span class="input-icon-left" aria-hidden="true">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+            </span>
+            <input
+              type="email"
+              id="email"
+              name="email"
+              class="form-input has-icon-left"
+              placeholder="you@company.com"
+              autocomplete="email"
+              required
+              aria-required="true"
+              aria-describedby="email-error"
+            />
+          </div>
+          <span id="email-error" class="form-error" role="alert" aria-live="polite"></span>
+        </div>
+
+        <!-- Password -->
+        <div class="form-group">
+          <label for="password" class="form-label">Password <span class="required" aria-label="required">*</span></label>
+          <div class="input-wrapper" style="position:relative">
+            <span class="input-icon-left" aria-hidden="true">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+            </span>
+            <input
+              type="password"
+              id="password"
+              name="password"
+              class="form-input has-icon-left"
+              placeholder="Enter your password"
+              autocomplete="current-password"
+              required
+              aria-required="true"
+              aria-describedby="password-error"
+              style="padding-right:44px"
+            />
+            <button
+              type="button"
+              class="password-toggle"
+              id="password-toggle"
+              aria-label="Show password"
+              aria-controls="password"
+              aria-pressed="false"
+              title="Toggle password visibility"
+            >
+              <svg id="eye-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
+              <svg id="eye-off-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="display:none"><path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19m-6.72-1.07a3 3 0 1 1-4.24-4.24"/><line x1="1" y1="1" x2="23" y2="23"/></svg>
+            </button>
+          </div>
+          <span id="password-error" class="form-error" role="alert" aria-live="polite"></span>
+        </div>
+
+        <!-- Submit -->
+        <button type="submit" id="login-btn" class="btn btn--primary" aria-live="polite">
+          Sign In
+        </button>
+
+        <div class="auth-footer" style="margin-top:0">
+          Don't have an account? <a href="register.html">Create one</a>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- ── Right: Visual Panel ── -->
+  <div class="auth-visual" aria-hidden="true">
+    <div class="auth-visual__bg"></div>
+    <div class="auth-visual__content">
+      <div class="auth-visual__mockup">
+        <div class="auth-visual__mockup-header">
+          <div class="mockup-dot mockup-dot--red"></div>
+          <div class="mockup-dot mockup-dot--yellow"></div>
+          <div class="mockup-dot mockup-dot--green"></div>
+          <span class="mockup-title">KnowSphere Chat</span>
+        </div>
+
+        <div class="mockup-item">
+          <div class="mockup-item__icon">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14.5 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7.5L14.5 2z"/></svg>
+          </div>
+          <div class="mockup-item__text">
+            <div class="mockup-item__name">Company Policy</div>
+            <div class="mockup-item__sub">12 documents indexed</div>
+          </div>
+          <span class="badge badge--ready mockup-item__badge">Ready</span>
+        </div>
+
+        <div class="mockup-item" style="background:var(--color-accent-subtle);border-color:var(--color-accent-border)">
+          <div class="mockup-item__icon" style="background:var(--color-accent);color:#fff">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+          </div>
+          <div class="mockup-item__text">
+            <div class="mockup-item__name" style="color:var(--color-accent)">What is the vacation policy?</div>
+            <div class="mockup-item__sub">Employees are entitled to 20 days...</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="auth-visual__tagline">AI answers from your documents</div>
+      <p class="auth-visual__desc">Upload documents, ask questions, and get accurate answers backed by your own source material.</p>
+    </div>
+  </div>
+</main>
+
+<script src="../js/config.js"></script>
+<script src="../js/auth.js"></script>
+<script src="../js/utils.js"></script>
+<script src="../js/api.js"></script>
+<script src="../js/login.js"></script>
+</body>
+</html>
