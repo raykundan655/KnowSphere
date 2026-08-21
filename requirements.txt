@@ -4,7 +4,7 @@ pydantic
 email-validator
 pymongo
 python-dotenv
-pwdlib[bcrypt]
+pwdlib[argon2,bcrypt]
 argon2-cffi
 PyJWT
 supabase
