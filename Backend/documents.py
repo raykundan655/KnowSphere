@@ -1,4 +1,4 @@
-from fastapi import UploadFile, File,Depends
+from fastapi import UploadFile, File, Depends, BackgroundTasks
 from fastapi import APIRouter
 from fastapi.security import HTTPBearer, HTTPAuthorizationCredentials
 from jwt_hendler import varify_jwt
@@ -35,7 +35,7 @@ app = APIRouter()
 user_cred=HTTPBearer()
 
 @app.post("/knowledgeBase/{kb_id}/documents")
-def upload_documents(kb_id:str,file:UploadFile=File(...),token:HTTPAuthorizationCredentials=Depends(user_cred)):
+def upload_documents(kb_id:str,background_tasks:BackgroundTasks,file:UploadFile=File(...),token:HTTPAuthorizationCredentials=Depends(user_cred)):
 
     jwt_token=token.credentials
 
@@ -106,8 +106,7 @@ def upload_documents(kb_id:str,file:UploadFile=File(...),token:HTTPAuthorization
 
     document_object=document_collection.insert_one(document_metadata)
 
-    processing_data(str(document_object.inserted_id))
-
+    background_tasks.add_task(processing_data, str(document_object.inserted_id))
 
     return JSONResponse(status_code=200,content={'Message':'File saved succesfully'})
 
