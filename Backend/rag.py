@@ -11,7 +11,7 @@ print("GOOGLE KEY EXISTS:", bool(os.getenv("GOOGLE_API_KEY")))
 
 
 llm = ChatGoogleGenerativeAI(
-    model="gemini-3.6-flash",
+    model="gemini-1.5-flash",
     temperature=0
 )
 
