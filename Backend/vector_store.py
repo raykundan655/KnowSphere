@@ -40,7 +40,8 @@ def get_embedding_model():
         cache_dir = os.path.join(os.path.dirname(__file__), "model_cache")
         _emb_model = HuggingFaceEmbeddings(
             model_name='sentence-transformers/all-MiniLM-L6-v2',
-            cache_folder=cache_dir
+            cache_folder=cache_dir,
+            model_kwargs={'local_files_only': True}
         )
     return _emb_model
 
