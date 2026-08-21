@@ -29,9 +29,9 @@ class APIError extends Error {
  * Base fetch wrapper with auth headers, error handling, and timeout.
  * @param {string} endpoint
  * @param {object} options - fetch options
- * @param {number} [timeoutMs=30000] - timeout in ms. Use a large value for uploads.
+ * @param {number} [timeoutMs=12000] - timeout in ms. Use a large value for uploads.
  */
-async function apiFetch(endpoint, options = {}, timeoutMs = 30000) {
+async function apiFetch(endpoint, options = {}, timeoutMs = 12000) {
   const url = `${CONFIG.API_BASE_URL}${endpoint}`;
 
   const headers = {

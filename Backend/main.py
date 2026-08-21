@@ -11,7 +11,10 @@ app = FastAPI()
 
 app.add_middleware(
     CORSMiddleware,
-    allow_origin_regex=r"https?://.*",
+    allow_origins=[
+        "http://localhost:5500",
+        "http://127.0.0.1:5500",
+    ],
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
@@ -21,7 +24,3 @@ app.include_router(auth_router)
 app.include_router(kb_router)
 app.include_router(document_router)
 app.include_router(chat_router)
-
-@app.get("/health")
-def health():
-    return {"status": "ok"}

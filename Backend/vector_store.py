@@ -1,3 +1,7 @@
+import tempfile
+from langchain_community.document_loaders import (PyPDFLoader,Docx2txtLoader,TextLoader)
+from langchain_text_splitters import RecursiveCharacterTextSplitter
+from langchain_huggingface import HuggingFaceEmbeddings
 from qdrant_client import QdrantClient
 from uuid import uuid4
 from dotenv import load_dotenv
@@ -18,47 +22,23 @@ import os
 load_dotenv()
 
 
-_qdrant_client = None
-_emb_model = None
-
-def get_qdrant_client():
-    global _qdrant_client
-    if _qdrant_client is None:
-        QDRANT_API_KEY = os.getenv('QDRANT_API_KEY')
-        QDRANT_URL = os.getenv('QDRANT_URL')
-        _qdrant_client = QdrantClient(
-            url=QDRANT_URL,
-            api_key=QDRANT_API_KEY
-        )
-    return _qdrant_client
-
-def get_embedding_model():
-    global _emb_model
-    if _emb_model is None:
-        from langchain_huggingface import HuggingFaceEmbeddings
-        import os
-        cache_dir = os.path.join(os.path.dirname(__file__), "model_cache")
-        _emb_model = HuggingFaceEmbeddings(
-            model_name='sentence-transformers/all-MiniLM-L6-v2',
-            cache_folder=cache_dir,
-            model_kwargs={'local_files_only': True}
-        )
-    return _emb_model
-
-
+QDRANT_API_KEY=os.getenv('QDRANT_API_KEY')
+QDRANT_URL=os.getenv('QDRANT_URL')
 
 collection_name="knowledge_base_vectors"
 
+qdrant=QdrantClient(
+    url=QDRANT_URL,
+    api_key=QDRANT_API_KEY
+)
 
+
+
+emb_model=HuggingFaceEmbeddings(model_name='sentence-transformers/all-MiniLM-L6-v2')
 
 
 
 def process_store(file,file_type,user_id,kb_id,document_id,file_name):
-    import tempfile
-    from langchain_community.document_loaders import (PyPDFLoader,Docx2txtLoader,TextLoader)
-    from langchain_text_splitters import RecursiveCharacterTextSplitter
-    qdrant = get_qdrant_client()
-    emb_model = get_embedding_model()
 
     suffix=f'.{file_type}'
 
@@ -182,8 +162,6 @@ def process_store(file,file_type,user_id,kb_id,document_id,file_name):
 
 
 def search_document(user_query,user_id,kb_id,limits=5):
-    qdrant = get_qdrant_client()
-    emb_model = get_embedding_model()
     print("Searching Qdrant...")
     print("User ID:", user_id)
     print("KB ID:", kb_id)
@@ -221,7 +199,7 @@ def search_document(user_query,user_id,kb_id,limits=5):
 
 
 def delete_document_vectorStore(user_id:str,kb_id:str,doc_id:str):
-    qdrant = get_qdrant_client()
+
     if not qdrant.collection_exists(collection_name):
         return {
             "message": "Qdrant collection does not exist"
