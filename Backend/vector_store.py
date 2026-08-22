@@ -162,12 +162,16 @@ def process_store(file,file_type,user_id,kb_id,document_id,file_name):
 
 
 def search_document(user_query,user_id,kb_id,limits=5):
+    import time
     print("Searching Qdrant...")
     print("User ID:", user_id)
     print("KB ID:", kb_id)
 
+    start_emb = time.time()
     user_emb=emb_model.embed_query(user_query)
+    print(f"[TIMER] Local query embedding took: {time.time() - start_emb:.4f} seconds", flush=True)
 
+    start_qdrant = time.time()
     result=qdrant.query_points(
         collection_name=collection_name,
         query=user_emb,
@@ -186,7 +190,7 @@ def search_document(user_query,user_id,kb_id,limits=5):
         ),
         limit=limits
     )
-
+    print(f"[TIMER] Qdrant search query took: {time.time() - start_qdrant:.4f} seconds", flush=True)
 
     return result
 

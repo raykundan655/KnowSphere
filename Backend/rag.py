@@ -180,16 +180,20 @@ chain=template | llm | parser
 
 
 def generate_ans(user_input,user_id,kb_id):
+    import time
+    print("\n=== STARTING RAG PIPELINE GENERATION ===", flush=True)
 
+    start_retrieval = time.time()
     context=user_query(user_input,user_id,kb_id)
+    print(f"[TIMER] Total retrieval phase took: {time.time() - start_retrieval:.4f} seconds", flush=True)
 
-    
-
+    start_llm = time.time()
     output=chain.invoke({
         'context':context,
         'question':user_input
     })
-
+    print(f"[TIMER] Gemini LLM generation took: {time.time() - start_llm:.4f} seconds", flush=True)
+    print("=== RAG PIPELINE GENERATION COMPLETED ===\n", flush=True)
 
     return output
 
