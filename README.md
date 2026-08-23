@@ -1,5 +1,7 @@
 # KnowSphere — Knowledge Base AI Platform
 
+**Live Demo:** [https://know-sphere-three.vercel.app/](https://know-sphere-three.vercel.app/)
+
 KnowSphere is a Retrieval-Augmented Generation (RAG) platform that allows users to upload documents (PDF, DOCX, TXT) and engage in grounded AI chats based on their contents. It is built using FastAPI for the backend, vanilla ES6 JavaScript/HTML5 for the frontend, and utilizes Google Gemini, Qdrant Cloud, MongoDB Atlas, and Supabase.
 
 ---
